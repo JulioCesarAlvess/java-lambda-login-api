@@ -3,9 +3,9 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Timeout: 300
-      MemorySize: 1024
+      MemorySize: 1152
       Handler: com.serverless.Handler
-      CodeUri: C:\Users\pablo\Projects\julio-exercicio
-      Runtime: java8.al2
+      CodeUri: C:\Users\Micro\Documents\estudo\projetos\java-lambda-login-api
+      Runtime: java11
       Architectures:
         - x86_64

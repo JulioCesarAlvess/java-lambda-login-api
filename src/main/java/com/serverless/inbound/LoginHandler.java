@@ -1,21 +1,21 @@
-package com.serverless;
+package com.serverless.inbound;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.serverless.entity.ApiGatewayResponse;
 import com.serverless.entity.User;
+import com.serverless.inbound.dto.TokenDTO;
+import com.serverless.outbound.AuthRepository;
 import com.serverless.outbound.UserRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Map;
 
-public class Handler implements RequestHandler<Map<String, Object>, ApiGatewayResponse> {
+public class LoginHandler implements RequestHandler<Map<String, Object>, ApiGatewayResponse> {
 
-    private static final Logger log = LogManager.getLogger(Handler.class);
+    private static final Logger log = LogManager.getLogger(LoginHandler.class);
 
     @Override
     public ApiGatewayResponse handleRequest(Map<String, Object> input, Context context) {
@@ -37,9 +37,20 @@ public class Handler implements RequestHandler<Map<String, Object>, ApiGatewayRe
                     .setStatusCode(401)
                     .build();
         }
+        AuthRepository authRepository = new AuthRepository();
+        String token = authRepository.createAuth(user.getUsuario());
+        if (token == null) {
+            log.info("erro durante a criação da autenticação");
+            return ApiGatewayResponse.builder()
+                    .setStatusCode(500)
+                    .build();
+        }
         log.info("senha correta do usuario: {}", receivedUser.getUsuario());
+        TokenDTO tokenDto = new TokenDTO(token);
+        Gson gson = new Gson();
         return ApiGatewayResponse.builder()
                 .setStatusCode(200)
+                .setRawBody(gson.toJson(tokenDto))
                 .build();
     }
 }

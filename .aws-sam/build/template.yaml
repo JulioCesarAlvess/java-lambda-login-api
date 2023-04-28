@@ -3,10 +3,10 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Timeout: 300
-      MemorySize: 1024
+      MemorySize: 1152
       Handler: com.serverless.Handler
       CodeUri: Function
-      Runtime: java8.al2
+      Runtime: java11
       Architectures:
       - x86_64
     Metadata:

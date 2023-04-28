@@ -60,8 +60,8 @@ package:
   artifact: target/hello-dev.jar
 
 functions:
-  hello:
-    handler: com.serverless.Handler
+  login:
+    handler: com.serverless.inbound.LoginHandler
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
@@ -132,7 +132,33 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-
+    AuthV3:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: AuthV3
+        AttributeDefinitions:
+          - AttributeName: idUsuario
+            AttributeType: S
+          - AttributeName: token
+            AttributeType: S
+        KeySchema:
+          - AttributeName: idUsuario
+            KeyType: HASH
+          - AttributeName: token
+            KeyType: RANGE
+        GlobalSecondaryIndexes:
+          - IndexName: token-index
+            KeySchema:
+              - AttributeName: token
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 1
+              WriteCapacityUnits: 1
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
 
 #  Outputs:
 #     NewOutput:
