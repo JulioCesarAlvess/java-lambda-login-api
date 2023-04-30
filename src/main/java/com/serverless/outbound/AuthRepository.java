@@ -23,7 +23,7 @@ public class AuthRepository {
 
     public String createAuth(String idUsuario) {
         PutItemRequest request = new PutItemRequest();
-        request.setTableName("AuthV3");
+        request.setTableName("AuthV4");
         request.setReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL);
         Map<String, AttributeValue> map = new HashMap<>();
         map.put("idUsuario", new AttributeValue(idUsuario));

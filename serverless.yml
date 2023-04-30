@@ -132,10 +132,10 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-    AuthV3:
+    AuthV4:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: AuthV3
+        TableName: AuthV4
         AttributeDefinitions:
           - AttributeName: idUsuario
             AttributeType: S
@@ -147,9 +147,9 @@ resources:
           - AttributeName: token
             KeyType: RANGE
         GlobalSecondaryIndexes:
-          - IndexName: token-index
+          - IndexName: usuario-index
             KeySchema:
-              - AttributeName: token
+              - AttributeName: idUsuario
                 KeyType: HASH
             Projection:
               ProjectionType: ALL

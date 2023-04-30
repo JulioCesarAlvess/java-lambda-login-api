@@ -9,7 +9,6 @@ import com.amazonaws.services.dynamodbv2.model.QueryResult;
 import com.serverless.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.util.HashMap;
 import java.util.Map;
 
