@@ -21,14 +21,14 @@ public class AuthRepository {
                 .build();
     }
 
-    public String createAuth(String idUsuario) {
+    public String createAuth() {
         PutItemRequest request = new PutItemRequest();
-        request.setTableName("AuthV4");
+        request.setTableName("AuthV5");
         request.setReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL);
         Map<String, AttributeValue> map = new HashMap<>();
-        map.put("idUsuario", new AttributeValue(idUsuario));
         String token = generateUuid();
         map.put("token", new AttributeValue(token));
+        map.put("ttl", new AttributeValue("3600000"));
         request.setItem(map);
         try {
             PutItemResult result = dynamoDB.putItem(request);

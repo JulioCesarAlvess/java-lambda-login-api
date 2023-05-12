@@ -38,7 +38,7 @@ public class LoginHandler implements RequestHandler<Map<String, Object>, ApiGate
                     .build();
         }
         AuthRepository authRepository = new AuthRepository();
-        String token = authRepository.createAuth(user.getUsuario());
+        String token = authRepository.createAuth();
         if (token == null) {
             log.info("erro durante a criação da autenticação");
             return ApiGatewayResponse.builder()
